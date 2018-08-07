@@ -13,7 +13,7 @@ print("Kitsune GD - Kitsune Username scraper for the game Geometry Dash")
 print("by Jack (oganessium)")
 print("=============================")
 def main_f():
-    tool = input("Please input u for user or b for batch: ")
+    tool = input("Please input u for user, b for batch or 3 for random 3 letter names: ")
     if tool.lower() == "u":
         aaap = input("Input username: ")
         array = [aaap]
