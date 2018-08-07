@@ -8,15 +8,19 @@
 import requests
 import random
 import itertools
+try:
+    from bs4 import BeautifulSoup
+except Exception:
+    print("Error: BeautifulSoup4 not installed. The random word option will not function, but the rest of Kitsune will still work.")
 print("=============================")
 print("Kitsune GD - Kitsune Username scraper for the game Geometry Dash")
 print("by Jack (oganessium)")
 print("=============================")
 def main_f():
-    tool = input("Please input u for user, b for batch or 3 for random 3 letter names: ")
+    tool = input("Please input u for username, b for a batch of usernames from URL, d for random words, or 3 for random 3 letter words: ")
     if tool.lower() == "u":
         aaap = input("Input username: ")
-        array = [aaap]
+        array = [x for x in aaap.split(", ")]
     elif tool.lower() == "t":
         array = ['robtop', 'viprin', 'ewkewowfo', 'KitsuneBot', 'PythonWizard', 'Orange', '6ix8ine', 'Hungary', 'Apostrophe', 'brensalsa', 'ykk', 'Yaktose', 'Geomarty']
     elif tool.lower() == "3":
@@ -26,7 +30,15 @@ def main_f():
         for _ in itertools.repeat(None, int(numb)):
             query = random.choice(letters) + random.choice(letters) + random.choice(letters)
             array.append(query)
-            
+    elif tool.lower() == "d":
+        numb = input("Input number of words to scrape: ")
+        array = []
+        for _ in itertools.repeat(None, int(numb)):
+            req = requests.get("https://randomword.com/").text
+            soup = BeautifulSoup(req, 'html.parser')
+            word = soup.find('div', id='random_word')
+            array.append(word.text)
+
     elif tool.lower() == "b":
         aaap = input("Input batch URL: ")
         try:
@@ -36,9 +48,6 @@ def main_f():
             print("Error: there is something wrong with the batch data you have given me! Please link to a file with one username per line!")
     else:
         print("Invalid input! please try again.")
-        print("=============================")
-        print("Thank you for using Kitsune!")
-        print("=============================")
         exit()
     available=[]
     unavailable=[]
@@ -47,7 +56,14 @@ def main_f():
         if h == "Y":
             pass
         else:
-            exit()
+            again = input("Would you like to scrape again? (Y/N) ")
+            if again == "Y" or again == "":
+                main_f()
+            else:
+                print("=============================")
+                print("Thank you for using Kitsune!")
+                print("=============================")
+                exit()
     for uname in array:
         data = {
             "gameVersion":"21", "binaryVersion":"35","gdw":"0","str":uname,"secret":"Wmfd2893gb7"
@@ -73,7 +89,7 @@ def main_f():
     print("Done!")
     print("=============================")
     again = input("Would you like to scrape again? (Y/N) ")
-    if again == "Y":
+    if again == "Y" or again == "":
         main_f()
     else:
         print("=============================")
