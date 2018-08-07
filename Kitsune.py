@@ -25,6 +25,8 @@ def main_f():
         array = ['robtop', 'viprin', 'ewkewowfo', 'KitsuneBot', 'PythonWizard', 'Orange', '6ix8ine', 'Hungary', 'Apostrophe', 'brensalsa', 'ykk', 'Yaktose', 'Geomarty']
     elif tool.lower() == "3":
         numb = input("Input number of random 3 letter usernames to scrape: ")
+        if not numb.isdigit():
+            numb=1
         letters = "abcdefghijklmnopqrstuvwxyz"
         array = []
         for _ in itertools.repeat(None, int(numb)):
@@ -32,6 +34,8 @@ def main_f():
             array.append(query)
     elif tool.lower() == "d":
         numb = input("Input number of words to scrape: ")
+        if not numb.isdigit():
+            numb=1
         array = []
         for _ in itertools.repeat(None, int(numb)):
             req = requests.get("https://randomword.com/").text
