@@ -62,7 +62,7 @@ def main_f():
             "gameVersion":"21","binaryVersion":"35","gdw":"0","targetAccountID":userID,"secret":"Wmfd2893gb7"
         }
         userInfo = requests.post("http://boomlings.com/database/getGJUserInfo20.php", data=data)
-        if userInfo.text == "-1":
+        if userInfo.text == "-1" and len(uname) >= 3:
             available.append(uname)
         else:
             unavailable.append(uname)
